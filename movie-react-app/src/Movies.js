@@ -16,6 +16,7 @@ export function MovieList( {movies = [], onChangeMovies = f => f }) {
                 <h3>{movie.date}</h3>
                 <h3>{movie.actors}</h3>
                 <h3>Rating: {movie.rating}</h3>
+                <button>Delete</button>
                 <hr></hr>
                 </>
             )
