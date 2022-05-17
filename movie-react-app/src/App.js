@@ -1,15 +1,22 @@
 import logo from './logo.svg';
+import { useRoutes, Link } from 'react-router-dom';
+import NavBar from './NavBar';
 import './App.css';
 import { useState, useEffect } from 'react';
 import { MovieList } from './Movies';
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom';
-import FormPage from './FormPage';
 
 
 function App() {
+  let element = useRoutes([
+    {path: '/', element: <L/>},
+    {path: '/FormPage', element: <Form />},
+  ]);
+
+  return element;
+   
+}
+
+function L() {
   const [movies, setMovies] = useState(null);
 
   useEffect( () => {
@@ -20,15 +27,27 @@ function App() {
     .catch( e => console.log(e.message) );
   }, [])
 
-  
   return (
-    <Router>
+    <>
+      <nav>
+        <Link to='/FormPage'>Add Review</Link>
+      </nav>
+      <h1>Hello</h1>
       <MovieList movies={movies} setMovies={setMovies}/>
-      <Route path='/FormPage' component={FormPage} />
-    </Router>
-  );
+    </>
     
-  
+  );
+}
+
+function Form() {
+  return (
+    <>
+      <nav>
+        <Link to='/'>Movies</Link>
+      </nav>
+      <h1>Welcome the form page!</h1>
+    </>
+  );
 }
 
 export default App;
