@@ -1,23 +1,25 @@
 import React from "react";
 
+const $ = selector => document.querySelector(selector);
+
 const FormPage = () => (
     <>
-      <h1>Welcome the form page!</h1>
+      <h1>Add New Movie Review!</h1>
       <form name="movie-review">
         <div>
           <label>
             Name:
-            <input type="text" name="name" />
+            <input type="text" name="movieName" id="name" />
+            <span style={{color: 'red'}}>*</span>
           </label>
-          <span style={{color: 'red'}}>*</span>
         </div>
 
         <div>
           <label>
             Date:
-            <input type="date" name="date" />
+            <input type="date" name="date" id="date" />
+            <span style={{color: 'red'}}>*</span>
           </label>
-          <span style={{color: 'red'}}>*</span>
         </div>
 
         <div>
@@ -57,62 +59,73 @@ const FormPage = () => (
           </select>
           <span style={{color: 'red'}}>*</span>
         </div>
-        <input type="button" id="btnsubmit" value="Submit"></input>
-        <input type="button" id="clear" value="Clear"></input>
+        <input type="button" id="btnsubmit" value="Submit" onClick={processEntries} ></input>
+        <input type="button" id="clear" value="Clear" onClick={resetForm} ></input>
       </form>
     </>
 );
 
-function FormValidation() {
-    const $ = selector => document.querySelector(selector);
+    
+
+    
   
-          const processEntries = () => {
-              const name = $("#name");
-              const date = $("#date");
-              const actors = $("#actors");
-              const posters = $("#posters");
-              const rating = $("#rating");
+function processEntries() {
+    console.log("entered")
+    const name = $("#name");
+    const date = $("#date");
+    const actors = $("#actors");
+    const posters = $("#posters");
+    const rating = $("#rating");
+
+    let isValid = true;
+    if (name.value === "") {
+        name.nextElementSibling.textContent = "Name is required!"
+        isValid = false;
+    } else {
+        name.nextElementSibling.textContent = ""
+    }
+    if (date.value === "") {
+        date.nextElementSibling.textContent = "Date is required!"
+        console.log("date")
+        isValid = false;
+    } else {
+        date.nextElementSibling.textContent = ""
+    }
+    if (actors.value === "") {
+        actors.nextElementSibling.textContent = "Actors are required!"
+        console.log("actor")
+        isValid = false;
+    } else {
+        actors.nextElementSibling.textContent = ""
+    }
+
+    if (posters.value === "") {
+        posters.nextElementSibling.textContent = "Poster is required!"
+        console.log("poster")
+        isValid = false;
+    } else {
+        posters.nextElementSibling.textContent = ""
+    }
+    if (rating.value === "") {
+        rating.nextElementSibling.textContent = "Rating is required!"
+        console.log("rating")
+        isValid = false;
+    } else {
+        rating.nextElementSibling.textContent = ""
+    }
+    
+
+    if (isValid === true) {
+        $("form").submit();
+    }
+};
+
+function resetForm() {
+    $('form').reset();
+    $("#name").focus();
+}
   
-              let isValid = true;
-              if (name.value === "") {
-                  alert("Name is required");
-                  isValid = false;
-              }
-              if (date.value === "") {
-                  alert("Date is required");
-                  isValid = false;
-              }
-              if (actors.value === "") {
-                  alert("Actors is required.");
-                  isValid = false;
-              } 
-  
-              if (posters.value === "") {
-                  alert("Posters is required");
-                  isValid = false;
-              } 
-              if (rating.value === "") {
-                  alert("Rating is required");
-                  isValid = false;
-              }
-              
-  
-  
-              if (isValid === true) {
-                  $("form").submit();
-              }
-          };
-  
-          const resetForm = () => {
-              $('form').reset();
-              $("#name").focus();
-          }
-  
-          document.addEventListener("DOMContentLoaded", () => {
-              $('#btnsubmit').addEventListener("click", processEntries);
-              $('#clear').addEventListener("click", resetForm);
-              $('#recipe-name').focus();
-          });
-  };
+       
+
 
 export default FormPage;
