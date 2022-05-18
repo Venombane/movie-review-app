@@ -8,8 +8,6 @@ import { PageForm } from './pages/FormPage';
 import NavBar from './NavBar';
 import './App.css';
 
-
-
 const App = () => {
   const [movies, setMovies] = useState(null);
   
@@ -33,5 +31,6 @@ const App = () => {
     </Router>
   );
 }
+
 
 export default App;

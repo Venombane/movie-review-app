@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router";
 
 export function MovieList( {movies = [], setMovies = f => f }) {
     if(movies === null || movies === undefined )
@@ -16,19 +17,21 @@ export function MovieList( {movies = [], setMovies = f => f }) {
                 <h3>{movie.date}</h3>
                 <h3>{movie.actors}</h3>
                 <h3>Rating: {movie.rating}</h3>
+
                 <button onClick= { () => {
-                    console.log(movie.name)
-                    const movieResult = movies.filter( movie => movie.name !== "Avengers");
-                    console.log(movieResult);
-                    setMovies(movieResult);
-                }}>
-                    Delete</button>
+                    console.log(i);
+                    movies.splice(i, 1);
+                    console.log(movies);
+                    setMovies(movies);
+                }} >Delete</button>
+                
                 <hr></hr>
                 </>
             )
+            
         })
         }
         </>
-        
     );
 }
+

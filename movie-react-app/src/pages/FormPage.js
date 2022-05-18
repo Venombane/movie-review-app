@@ -74,7 +74,6 @@ export function PageForm({movies = [], setMovies = f => f }) {
     const actors = $("#actors");
     const posters = $("#posters");
     const rating = $("#rating");
-
     let isValid = true;
     if (name.value === "") {
         name.nextElementSibling.textContent = "Name is required!";
@@ -111,6 +110,7 @@ export function PageForm({movies = [], setMovies = f => f }) {
 
     if (isValid === true) {
       const actorList = actors.value.toString().split(",");
+      
       let newObject = { "name": name.value, "date": date.value, "actors": actorList, "poster": posters.value, "rating": rating.value };
       movies.push(newObject);
       setMovies(movies);
