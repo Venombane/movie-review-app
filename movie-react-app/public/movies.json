@@ -1,14 +1,14 @@
 [
     {
         "name": "Avengers",
-        "date": "5/4/2012",
+        "date": "2012-05-04",
         "actors": ["Robert Downey Jr", "Chris Evans", "Mark Ruffalo", "Chris Hemsworth", "Scarlett Johansson", "Jeremy Renner", "Tom Hiddleston", "Samuel L. Jackson"],
         "poster": "images/Avengers1.jpg",
         "rating": 8
     },
     {
         "name": "Avengers: Age of Ultron",
-        "date": "5/1/2015",
+        "date": "2015-05-01",
         "actors": ["Robert Downey Jr", "Chris Evans", "Mark Ruffalo", "Chris Hemsworth", "Scarlett Johansson", "Jeremy Renner", "Elizabeth Olsen", "Paul Bettany", "Samuel L. Jackson"],
         "poster": "images/Avengers2.jpg",
         "rating": 7

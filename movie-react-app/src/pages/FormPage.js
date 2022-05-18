@@ -1,8 +1,10 @@
-import React from "react";
+import { React } from 'react';
 
 const $ = selector => document.querySelector(selector);
 
-const FormPage = () => (
+export function PageForm({movies = [], setMovies = f => f }) {
+  
+  return (
     <>
       <h1>Add New Movie Review!</h1>
       <form name="movie-review">
@@ -59,18 +61,14 @@ const FormPage = () => (
           </select>
           <span style={{color: 'red'}}>*</span>
         </div>
-        <input type="button" id="btnsubmit" value="Submit" onClick={processEntries} ></input>
+        <input type="button" id="btnsubmit" value="Submit" onClick={ProcessEntries} ></input>
         <input type="button" id="clear" value="Clear" onClick={resetForm} ></input>
       </form>
     </>
-);
+  );
 
-    
-
-    
   
-function processEntries() {
-    console.log("entered")
+  function ProcessEntries() {
     const name = $("#name");
     const date = $("#date");
     const actors = $("#actors");
@@ -79,53 +77,56 @@ function processEntries() {
 
     let isValid = true;
     if (name.value === "") {
-        name.nextElementSibling.textContent = "Name is required!"
+        name.nextElementSibling.textContent = "Name is required!";
         isValid = false;
     } else {
-        name.nextElementSibling.textContent = ""
+        name.nextElementSibling.textContent = "";
     }
     if (date.value === "") {
-        date.nextElementSibling.textContent = "Date is required!"
-        console.log("date")
+        date.nextElementSibling.textContent = "Date is required!";
         isValid = false;
     } else {
-        date.nextElementSibling.textContent = ""
+        date.nextElementSibling.textContent = "";
     }
     if (actors.value === "") {
-        actors.nextElementSibling.textContent = "Actors are required!"
-        console.log("actor")
+        actors.nextElementSibling.textContent = "Actors are required!";
         isValid = false;
     } else {
-        actors.nextElementSibling.textContent = ""
+        actors.nextElementSibling.textContent = "";
     }
 
     if (posters.value === "") {
-        posters.nextElementSibling.textContent = "Poster is required!"
-        console.log("poster")
+        posters.nextElementSibling.textContent = "Poster is required!";
         isValid = false;
     } else {
-        posters.nextElementSibling.textContent = ""
+        posters.nextElementSibling.textContent = "";
     }
     if (rating.value === "") {
-        rating.nextElementSibling.textContent = "Rating is required!"
-        console.log("rating")
+        rating.nextElementSibling.textContent = "Rating is required!";
         isValid = false;
     } else {
-        rating.nextElementSibling.textContent = ""
+        rating.nextElementSibling.textContent = "";
     }
     
 
     if (isValid === true) {
-        $("form").submit();
-    }
-};
+      const actorList = actors.value.toString().split(",");
+      let newObject = { "name": name.value, "date": date.value, "actors": actorList, "poster": posters.value, "rating": rating.value };
+      movies.push(newObject);
+      setMovies(movies);
 
-function resetForm() {
+        // $("form").submit();
+    }
+  };
+
+  function resetForm() {
+    $("#name").nextElementSibling.textContent = "*";
+    $("#date").nextElementSibling.textContent = "*";
+    $("#actors").nextElementSibling.textContent = "*";
+    $("#posters").nextElementSibling.textContent = "*";
+    $("#rating").nextElementSibling.textContent = "*";
+
     $('form').reset();
     $("#name").focus();
+  }
 }
-  
-       
-
-
-export default FormPage;
