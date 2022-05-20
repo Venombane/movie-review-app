@@ -63,6 +63,7 @@ export function PageForm({movies = [], setMovies = f => f }) {
         </div>
         <input type="button" id="btnsubmit" value="Submit" onClick={ProcessEntries} ></input>
         <input type="button" id="clear" value="Clear" onClick={resetForm} ></input>
+        <h3 id="submitted"></h3>
       </form>
     </>
   );
@@ -114,8 +115,14 @@ export function PageForm({movies = [], setMovies = f => f }) {
       let newObject = { "name": name.value, "date": date.value, "actors": actorList, "poster": posters.value, "rating": rating.value };
       movies.push(newObject);
       setMovies(movies);
-
-        // $("form").submit();
+      $('form').reset();
+      $("#name").nextElementSibling.textContent = "*";
+      $("#date").nextElementSibling.textContent = "*";
+      $("#actors").nextElementSibling.textContent = "*";
+      $("#posters").nextElementSibling.textContent = "*";
+      $("#rating").nextElementSibling.textContent = "*";
+      $("#submitted").textContent = "Submitted!";
+      setInterval(function() {$("#submitted").textContent = "";}, 5000);
     }
   };
 
@@ -125,6 +132,7 @@ export function PageForm({movies = [], setMovies = f => f }) {
     $("#actors").nextElementSibling.textContent = "*";
     $("#posters").nextElementSibling.textContent = "*";
     $("#rating").nextElementSibling.textContent = "*";
+    $("#submitted").textContent = "";
 
     $('form').reset();
     $("#name").focus();
