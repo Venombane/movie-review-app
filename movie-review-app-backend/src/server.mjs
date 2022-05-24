@@ -13,8 +13,8 @@ app.post('/api/deleteMovie', async (req, res) => {
         await client.connect();
 
         const db = client.db('movies');
-
-        const movieInfo = await db.collection('mymovies').insertOne(req.body);
+        console.log(req.body);
+        const movieInfo = await db.collection('mymovies').deleteOne(req.body);
 
         res.status(200)
 

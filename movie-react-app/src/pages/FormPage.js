@@ -33,14 +33,8 @@ export function PageForm({movies = [], setMovies = f => f }) {
         </div>
 
         <div>
-          <label>Posters: </label>
-          <select defaultValue="" name="posters" id="posters">
-            <option value="" disabled hidden>Select...</option>
-            <option value="images/Avengers1.jpg">Avengers</option>
-            <option value="images/Avengers2.jpg">Avengers: Age of Ultron</option>
-            <option value="images/Avengers3.jpg">Avengers: Infinity War</option>
-            <option value="images/Avengers4.jpg">Avengers: Endgame</option>
-          </select>
+          <label>Poster: </label>
+          <input type="file" name="posters" id="posters"></input>
           <span style={{color: 'red'}}>*</span>
         </div>
 
@@ -63,7 +57,7 @@ export function PageForm({movies = [], setMovies = f => f }) {
         </div>
         <input type="button" id="btnsubmit" value="Submit" onClick={ProcessEntries} ></input>
         <input type="button" id="clear" value="Clear" onClick={resetForm} ></input>
-        <h3 id="submitted"></h3>
+        <h3 id="submitted">Not Submitted</h3>
       </form>
     </>
   );
@@ -98,7 +92,7 @@ export function PageForm({movies = [], setMovies = f => f }) {
     if (posters.value === "") {
         posters.nextElementSibling.textContent = "Poster is required!";
         isValid = false;
-    } else {
+    }  else {
         posters.nextElementSibling.textContent = "";
     }
     if (rating.value === "") {
@@ -118,21 +112,11 @@ export function PageForm({movies = [], setMovies = f => f }) {
         "poster": posters.value, 
         "rating": rating.value 
       };
-      const newName = name.value
-      const newDate = date.value
-      const newPoster = posters.value
-      const newRating = rating.value
-      let newMovie = { newName, newDate, actorList, newPoster, newRating };
+      
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({
-        "name": name.value,
-        "date": date.value,
-        "actors": actorList,
-        "poster": posters.value,
-        "rating": rating.value
-      });
+      var raw = JSON.stringify({newObject});
 
       var requestOptions = {
         method: 'POST',
@@ -157,7 +141,7 @@ export function PageForm({movies = [], setMovies = f => f }) {
       $("#rating").nextElementSibling.textContent = "*";
       $("#submitted").textContent = "Submitted!";
       if ($("#submitted").textContent != null) {
-        setInterval(function() {$("#submitted").textContent = "";}, 5000);
+        setInterval(function() {$("#submitted").textContent = "Submit Another?";}, 5000);
       }
       
     }
@@ -169,7 +153,7 @@ export function PageForm({movies = [], setMovies = f => f }) {
     $("#actors").nextElementSibling.textContent = "*";
     $("#posters").nextElementSibling.textContent = "*";
     $("#rating").nextElementSibling.textContent = "*";
-    $("#submitted").textContent = "";
+    $("#submitted").textContent = "Not Submitted";
 
     $('form').reset();
     $("#name").focus();

@@ -7,6 +7,8 @@ import { MovieList } from './pages/Movies';
 import { PageForm } from './pages/FormPage';
 import NavBar from './NavBar';
 import './App.css';
+import {Button} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   const [movies, setMovies] = useState(null);

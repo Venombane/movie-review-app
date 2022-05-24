@@ -20,7 +20,25 @@ export function MovieList( {movies = [], setMovies = f => f }) {
 
                     <button onClick= { (e) => {
                         const name = e.currentTarget.parentElement.firstChild.lastChild.textContent;
-                        const movieResult = movies.filter(movie => movie.name != name);
+                        const movieResult = movies.filter(movie => movie.name !== name);
+                        var myHeaders = new Headers();
+                        myHeaders.append("Content-Type", "application/json");
+
+                        var raw = JSON.stringify({
+                            "name": name
+                          });
+
+                        var requestOptions = {
+                        method: 'POST',
+                        headers: myHeaders,
+                        body: raw,
+                        redirect: 'follow'
+                        };
+
+                        fetch("/api/deleteMovie", requestOptions)
+                            .then(response => response.text())
+                            .then(result => console.log(result))
+                            .catch(error => console.log('error', error));
                         setMovies(movieResult);
                         
                     }} >Delete</button>
