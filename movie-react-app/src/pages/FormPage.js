@@ -111,10 +111,44 @@ export function PageForm({movies = [], setMovies = f => f }) {
 
     if (isValid === true) {
       const actorList = actors.value.toString().split(",");
-      
-      let newObject = { "name": name.value, "date": date.value, "actors": actorList, "poster": posters.value, "rating": rating.value };
+      let newObject = { 
+        "name": name.value,
+        "date": date.value, 
+        "actors": actorList, 
+        "poster": posters.value, 
+        "rating": rating.value 
+      };
+      const newName = name.value
+      const newDate = date.value
+      const newPoster = posters.value
+      const newRating = rating.value
+      let newMovie = { newName, newDate, actorList, newPoster, newRating };
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        "name": name.value,
+        "date": date.value,
+        "actors": actorList,
+        "poster": posters.value,
+        "rating": rating.value
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      fetch("/api/addMovie", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+
       movies.push(newObject);
       setMovies(movies);
+
       $('form').reset();
       $("#name").nextElementSibling.textContent = "*";
       $("#date").nextElementSibling.textContent = "*";
@@ -122,7 +156,10 @@ export function PageForm({movies = [], setMovies = f => f }) {
       $("#posters").nextElementSibling.textContent = "*";
       $("#rating").nextElementSibling.textContent = "*";
       $("#submitted").textContent = "Submitted!";
-      setInterval(function() {$("#submitted").textContent = "";}, 5000);
+      if ($("#submitted").textContent != null) {
+        setInterval(function() {$("#submitted").textContent = "";}, 5000);
+      }
+      
     }
   };
 

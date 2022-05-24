@@ -32,7 +32,7 @@ app.post('/api/addMovie', async (req, res) => {
         await client.connect();
 
         const db = client.db('movies');
-
+        console.log(req.body);
         const movieInfo = await db.collection('mymovies').insertOne(req.body);
 
         res.status(200)
