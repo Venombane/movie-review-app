@@ -53,7 +53,7 @@ app.get('/api/data', async (req, res) => {
         const db = client.db('movies');
 
         const movieInfo = await db.collection('mymovies').find({}).toArray();
-
+        console.log(movieInfo);
         res.status(200).json(movieInfo);
 
         client.close();
