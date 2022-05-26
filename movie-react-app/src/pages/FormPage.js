@@ -119,8 +119,7 @@ export function PageForm({movies = [], setMovies = f => f }) {
       let newObject = { 
         "name": name.value,
         "year": year.value, 
-        "actors": actorList, 
-        "poster": posters.value, 
+        "actors": actorList,
         "rating": rating.value 
       };
 

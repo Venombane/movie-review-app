@@ -46,7 +46,7 @@ app.post('/api/addMovie', upload.single('moviePoster'), async (req, res) => {
         await client.connect();
 
         const db = client.db('movies');
-
+        console.log(req.file.filename);
 
         const movieInfo = await db.collection('mymovies').insertOne({ 
             "name": req.body.movieName,
