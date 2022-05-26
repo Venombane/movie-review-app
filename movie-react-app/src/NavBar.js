@@ -2,17 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const NavBar = () => (
-    <nav>
-        <ul>
-            <div>
-                <li>
+    <nav className="bg-dark">
+        
+            <div className="row text-center">
+                <button className="col btn btn-dark">
                     <Link to="/">Movies</Link>
-                </li>
-                <li>
+                </button>
+                <button className="col btn btn-dark ">
                     <Link to="/FormPage">Add Movie</Link>
-                </li>
+                </button>
             </div>
-        </ul>
+            <hr className="text-white"></hr>
+        
     </nav>
 );
 

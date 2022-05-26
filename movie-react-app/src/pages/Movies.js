@@ -8,16 +8,22 @@ export function MovieList( {movies = [], setMovies = f => f }) {
         {
             
         movies.map((movie, i) => {
+            var poster = "images/" + movie.poster
             return (
                 <>
-                <div className='container bg-dark w-50'>
-                    <h2 className='mb-3 text-white text-center fw-bold'>{i + 1}. {movie.name}</h2>
-                    <img src={movie.poster} alt={movie.name} height="300" width="200"></img>
-                    <h3 className='mb-3 text-white text-center fw-bold'>{movie.date}</h3>
-                    <h3 className='mb-3 text-white text-center fw-bold'>{movie.actors}</h3>
-                    <h3 className='mb-3 text-white text-center fw-bold'>Rating: {movie.rating}</h3>
+                
+                <div className='container text-center w-50border-bottom border-secondary border-1'>
+                    <h2 className='mb-1 text-white text-center fw-bold'>{i + 1}. {movie.name}</h2>
+                    <img src={poster} alt={movie.name} height="300" width="200" className="border border-secondary border-2"></img>
+                    <div className="container w-50">
+                        <h4 className='mb-1 text-white'>{movie.year}</h4>
+                        <h3 className="text-white">Actors:</h3>
+                        <h4 className='text-white'>{movie.actors}</h4>
+                        <h3 className='mb-3 text-white'>Rating: {movie.rating}/10</h3>
+                    </div>
+                    
 
-                    <button className='btn btn-dark btn-lg border border-1' onClick= { (e) => {
+                    <button className='mb-3 btn btn-primary' onClick= { (e) => {
                         const name = e.currentTarget.parentElement.firstChild.lastChild.textContent;
                         const movieResult = movies.filter(movie => movie.name !== name);
                         setMovies(movieResult);
@@ -44,7 +50,6 @@ export function MovieList( {movies = [], setMovies = f => f }) {
                         
                     }} >Delete</button>
                     
-                    <hr className="text-white"></hr>
                 </div>
                 </>
             )

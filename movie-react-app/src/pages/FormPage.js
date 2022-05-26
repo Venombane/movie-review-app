@@ -5,44 +5,44 @@ const $ = selector => document.querySelector(selector);
 export function PageForm({movies = [], setMovies = f => f }) {
   
   return (
-    <div className='container bg-dark w-50'>
-      <div className='bg-dark'>
-        <h1 className='mb-3 text-white text-center fw-bold'>Add New Movie Review!</h1>
+    <div>
+      <div className='container text-left'>
+        <h1 className='mb-4 text-white'>New Movie Review</h1>
         <hr className="text-white"></hr>
-        <form action="" method="POST" className='form-horizontal'>
-          <div className='mb-3 col-md-12 text-white fw-bold fs-5'>
-            <label>
-              Name:
-              <input className='form-control' type="text" name="movieName" id="name" />
-              <span style={{color: 'red'}}>*</span>
-            </label>
-          </div>
 
-          <div className='mb-3 col-md-12 text-white fw-bold fs-5'>
-            <label>
-              Date:
-              <input className='form-control' type="date" name="date" id="date" />
-              <span style={{color: 'red'}}>*</span>
-            </label>
-          </div>
+        <form action="/api/addMovie" method="POST" className='form-horizontal' encType='multipart/form-data'>
+          <div className='form-group'>
 
-          <div className='mb-3 col-md-6 text-white fw-bold fs-5'>
-            <div>
-              <label>Actors (seperate with a comma) : </label>
-            </div>
-            <textarea className='form-control' id="actors" rows="3" name="actors"></textarea>
+            <label htmlFor="movieName" className='text-white'>Name:</label>
+            <input className='form-control' type="text" name="movieName" id="name" placeholder='Enter Movie Name...'/>
             <span style={{color: 'red'}}>*</span>
           </div>
 
-          <div className='mb-3 col-md-3 text-white fw-bold fs-5'>
-            <label>Poster: </label>
-            <input className='form-control' type="file" name="posters" id="posters"></input>
+          <div className='form-group'>
+
+            <label htmlFor="movieYear" className='text-white' >Year:</label>
+            <input className='form-control' type="number" name="movieYear" id="year" placeholder='Enter Year...'/>
             <span style={{color: 'red'}}>*</span>
           </div>
 
-          <div className='mb-3 col-md-1 text-white fw-bold fs-5'>
-            <label>Rating: </label>
-            <select className='form-control' defaultValue="" name="rating" id="rating">
+          <div className='form-group'>
+
+            <label htmlFor="movieActors" className='text-white' >Actors</label>
+            <textarea className='form-control' id="actors" rows="3" name="movieActors" placeholder='Seperate Names with a comma and a space...'></textarea>
+            <span style={{color: 'red'}}>*</span>
+          </div>
+          
+          <div className='form-group mb-2'>
+
+            <div><label htmlFor="poster" className='text-white'>Upload Image</label></div>
+            <input type="file" className='form-control-file text-white' name="moviePoster" id="poster"/>
+            <span style={{color: 'red'}}>*</span>
+          </div>
+
+          <div className='form-group mb-2'>
+
+            <div><label htmlFor="movieRating" className='text-white' >Rating: </label></div>
+            <select className='form-control-select' defaultValue="" name="movieRating" id="rating" placeholder='Select a Rating...'>
               <option value="" disabled hidden>Select...</option>
               <option value="10">10</option>
               <option value="9">9</option>
@@ -57,10 +57,14 @@ export function PageForm({movies = [], setMovies = f => f }) {
             </select>
             <span style={{color: 'red'}}>*</span>
           </div>
-          <input className='btn btn-dark btn-lg border border-1' type="button" id="btnsubmit" value="Submit" onClick={ProcessEntries} ></input>
-          <input className='btn btn-dark btn-lg border border-1' type="button" id="clear" value="Clear" onClick={resetForm} ></input>
-          <h3 className='mb-3 text-white text-center fw-bold' id="submitted">Not Submitted</h3>
+
+          <div className='form-group'>
+
+            <a href="/" className='btn btn-warning'>Cancel</a>
+            <button className='btn btn-primary' type="button" id="btnsubmit" value="Submit" onClick={ProcessEntries} >Submit</button>
+          </div>
         </form>
+        <hr className="text-white"></hr>
       </div>
     </div>
   );
@@ -68,10 +72,11 @@ export function PageForm({movies = [], setMovies = f => f }) {
   
   function ProcessEntries() {
     const name = $("#name");
-    const date = $("#date");
+    const year = $("#year");
     const actors = $("#actors");
-    const posters = $("#posters");
+    const posters = $("#poster");
     const rating = $("#rating");
+    console.log(year.value)
     let isValid = true;
     if (name.value === "") {
         name.nextElementSibling.textContent = "Name is required!";
@@ -79,11 +84,14 @@ export function PageForm({movies = [], setMovies = f => f }) {
     } else {
         name.nextElementSibling.textContent = "";
     }
-    if (date.value === "") {
-        date.nextElementSibling.textContent = "Date is required!";
+    if (year.value === "") {
+        year.nextElementSibling.textContent = "Year is required!";
+        isValid = false;
+    } else if (year.value <= 1900) {
+        year.nextElementSibling.textContent = "Year is too small!";
         isValid = false;
     } else {
-        date.nextElementSibling.textContent = "";
+        year.nextElementSibling.textContent = "";
     }
     if (actors.value === "") {
         actors.nextElementSibling.textContent = "Actors are required!";
@@ -110,61 +118,16 @@ export function PageForm({movies = [], setMovies = f => f }) {
       const actorList = actors.value.toString().split(",");
       let newObject = { 
         "name": name.value,
-        "date": date.value, 
+        "year": year.value, 
         "actors": actorList, 
         "poster": posters.value, 
         "rating": rating.value 
       };
-      
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      var raw = JSON.stringify({
-        "name": name.value,
-        "date": date.value, 
-        "actors": actorList, 
-        "poster": posters.value, 
-        "rating": rating.value 
-      });
-
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-      };
-
-      fetch("/api/addMovie", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
 
       movies.push(newObject);
       setMovies(movies);
 
-      $('form').reset();
-      $("#name").nextElementSibling.textContent = "*";
-      $("#date").nextElementSibling.textContent = "*";
-      $("#actors").nextElementSibling.textContent = "*";
-      $("#posters").nextElementSibling.textContent = "*";
-      $("#rating").nextElementSibling.textContent = "*";
-      $("#submitted").textContent = "Submitted!";
-      if ($("#submitted").textContent != null) {
-        setInterval(function() {$("#submitted").textContent = "Submit Another?";}, 5000);
-      }
-      
+      $("form").submit();
     }
   };
-
-  function resetForm() {
-    $("#name").nextElementSibling.textContent = "*";
-    $("#date").nextElementSibling.textContent = "*";
-    $("#actors").nextElementSibling.textContent = "*";
-    $("#posters").nextElementSibling.textContent = "*";
-    $("#rating").nextElementSibling.textContent = "*";
-    $("#submitted").textContent = "Not Submitted";
-
-    $('form').reset();
-    $("#name").focus();
-  }
 }

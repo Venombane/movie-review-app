@@ -19,7 +19,7 @@ const App = () => {
     }
     fetchData();
   }, [])
-  console.log(movies);
+
   return (
     <Router>
       <div className="App">
@@ -30,6 +30,7 @@ const App = () => {
         </Routes>
       </div>
     </Router>
+    
   );
 }
 
